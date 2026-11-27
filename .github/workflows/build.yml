@@ -1,0 +1,18 @@
+name: Build Card2k
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - run: unzip -q Card2k-source.zip
+      - run: mvn -B package
+        working-directory: Card2k
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Card2k
+          path: Card2k/target/Card2k-*.jar
